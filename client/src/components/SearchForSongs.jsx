@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { Link } from 'react-router-dom';
 import SpotifyResults from './SpotifyResults.jsx';
 
 class SearchForSongs extends React.Component {
@@ -123,8 +125,53 @@ class SearchForSongs extends React.Component {
 
   render() {
     const { song, songData, searchDisplay, playlists, filteredFriendsPlaylists } = this.state;
+
     return (
       <div>
+        <Breadcrumb style={{ marginLeft: 150, marginRight: 150 }}>
+          <Breadcrumb.Item>
+            <Link to="/main">
+              Home
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/createplaylist',
+              state: {
+                id_user: this.props.location.state.id_user,
+                username: this.props.location.state.username,
+              },
+            }}
+            >
+                Create playlist
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>Search</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/playlists',
+              state: {
+                id_user: this.props.location.state.id_user,
+                username: this.props.location.state.username,
+              },
+            }}
+            >
+              Playlists
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/friends',
+              state: {
+                id_user: this.props.location.state.id_user,
+                username: this.props.location.state.username,
+              },
+            }}
+            >
+                Friends
+            </Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <div style={{ background: 'orange', marginLeft: 150, marginRight: 150, padding: 0, height: 65 }}>
           <h1 style={{ fontSize: 30, color: 'white', marginLeft: 40, textAlign: 'center' }}>Add songs to your playlists</h1>
         </div>
