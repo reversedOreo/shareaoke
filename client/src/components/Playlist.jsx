@@ -73,12 +73,14 @@ class Playlist extends React.Component {
               ? (
                 <div>
                   <iframe src={`https://open.spotify.com/embed/track/${uri}`} width="300" height="380" frameBorder="0" allowTransparency="true" allow="encrypted-media" />
-                  <Lyrics queryData={clickedSong} />
                 </div>
               )
               : null}
           </div>
         </div>
+        {playerDisplay ? 
+          <Lyrics queryData={clickedSong} />
+          : null}
       </div>
     );
   }
