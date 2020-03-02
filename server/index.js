@@ -10,24 +10,6 @@ const request = require('request');
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 
-request('https://spotifycharts.com/regional/global/daily/latest').pipe(csv(fs.createWriteStream('./data.csv')))
-// .pipe(csv())
-  .on('data', (row) => {
-    console.log(row);
-  })
-  .on('end', () => {
-    console.log('CSV file successfully processed');
-  })
-
-//  fs.createReadStream('../server/data.csv')
-//   .pipe(csv())
-//   .on('data', (row) => {
-//     console.log(row);
-//   })
-//   .on('end', () => {
-//     console.log('CSV file successfully processed');
-//   });
-
 
 // app.set('view engine', 'html');
 
