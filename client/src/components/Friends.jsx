@@ -120,7 +120,7 @@ class Friend extends React.Component {
       sentFriendRequests,
     } = this.state;
 
-    const { username } = this.props.location.state;
+    const { username } = this.props;
 
     return (
       <div>
