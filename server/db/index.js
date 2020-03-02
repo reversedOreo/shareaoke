@@ -23,6 +23,7 @@ connection.connect(err => {
   }
 });
 
+
 // users
 const createUser = (username) => {
   const mysqlQuery = 'INSERT INTO user VALUES(null, ?);';

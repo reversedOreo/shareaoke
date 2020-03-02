@@ -6,10 +6,20 @@ const { spotifyRouter } = require('./auth-server/authorization_code/app');
 const csv = require('csv-parser');
 const fs = require('fs');
 const app = express();
+const request = require('request');
+app.set('views', path.join(__dirname, 'views'));
+app.engine('html', require('ejs').renderFile);
 
-// app.set('views', path.join(__dirname, 'views'));
-// app.engine('html', require('ejs').renderFile);
-// let all = fs.createReadStream('../regional-global-daily-latest.csv')
+request('https://spotifycharts.com/regional/global/daily/latest').pipe(csv(fs.createWriteStream('./data.csv')))
+// .pipe(csv())
+  .on('data', (row) => {
+    console.log(row);
+  })
+  .on('end', () => {
+    console.log('CSV file successfully processed');
+  })
+
+//  fs.createReadStream('../server/data.csv')
 //   .pipe(csv())
 //   .on('data', (row) => {
 //     console.log(row);
