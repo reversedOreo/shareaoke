@@ -9,15 +9,20 @@ class SpotifyResults extends React.Component {
   }
 
   render() {
-    const { songData, addSong, playlists } = this.props;
+    const { songData, addSong, playlists, friendsPlaylists, addFriendSong } = this.props;
 
     return (
       <div>
-        <ul>
-          {songData.map(song => (
-            <SingleSpotifySong playlists={playlists} song={song} key={song.id} addSong={addSong} />
-          ))}
-        </ul>
+        {songData.map(song => (
+          <SingleSpotifySong
+            friendsPlaylists={friendsPlaylists}
+            playlists={playlists}
+            song={song}
+            key={song.id}
+            addSong={addSong}
+            addFriendSong={addFriendSong}
+          />
+        ))}
       </div>
     );
   }

@@ -2,6 +2,9 @@
 /* eslint-disable no-alert */
 import React from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { Link } from 'react-router-dom';
 import FriendsList from './FriendsList.jsx';
 
 class Friend extends React.Component {
@@ -46,7 +49,8 @@ class Friend extends React.Component {
   }
 
   handleGetFriends(route, change) {
-    const { id_user } = this.props;
+    const id_user = this.props.id_user || this.props.location.state.id_user;
+
     axios.get(`/api/friend/${route}/${id_user}`)
       .then(friend => {
         this.setState({
@@ -57,21 +61,21 @@ class Friend extends React.Component {
   }
 
   removeFriend(id_remove) {
-    const { id_user } = this.props;
+    const id_user = this.props.id_user || this.props.location.state.id_user;
     axios.delete(`/api/friend/remove/${id_user}/${id_remove}`)
       .then(() => { this.handleSetFriends(); })
       .catch((err) => console.error(err));
   }
 
   acceptFriendRequest(id_sender) {
-    const { id_user } = this.props;
+    const id_user = this.props.id_user || this.props.location.state.id_user;
     axios.patch(`/api/friend/accept/${id_sender}/${id_user}`)
       .then(() => { this.handleSetFriends(); })
       .catch((err) => console.error(err));
   }
 
   sendRequest(friend) {
-    const { id_user } = this.props;
+    const id_user = this.props.id_user || this.props.location.state.id_user;
     // get user from database
     axios.get(`/api/user/${friend}`)
       .then((user) => {
@@ -119,19 +123,73 @@ class Friend extends React.Component {
       sentFriendRequests,
     } = this.state;
 
+    const { username } = this.props;
+
     return (
       <div>
-        <div>
-          <input onChange={this.handleInput} />
-          <button onClick={this.handleClick}>Add Friend</button>
+        <Breadcrumb style={{ marginLeft: 150, marginRight: 150 }}>
+          <Breadcrumb.Item>
+            <Link to="/main">
+              Home
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/createplaylist',
+              state: {
+                id_user: this.props.location.state.id_user,
+                username: this.props.location.state.username,
+              },
+            }}
+            >
+                Create playlist
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/search',
+              state: {
+                id_user: this.props.location.state.id_user,
+                username: this.props.location.state.username,
+              },
+            }}
+            >
+                Search
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/playlists',
+              state: {
+                id_user: this.props.location.state.id_user,
+                username: this.props.location.state.username,
+              },
+            }}
+            >
+                Playlists
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Friends</Breadcrumb.Item>
+        </Breadcrumb>
+        <div style={{ background: 'orange', marginLeft: 150, marginRight: 150, padding: 0, height: 65 }}>
+          <h1 style={{ fontSize: 45, color: 'white', marginLeft: 40, textAlign: 'center' }}>Friends</h1>
         </div>
-        <FriendsList
-          friends={allFriends}
-          received={receivedFriendRequests}
-          sent={sentFriendRequests}
-          accept={this.acceptFriendRequest}
-          remove={this.removeFriend}
-        />
+        <div style={{ height: 1200, background: '#ebeef2', marginLeft: 150, marginRight: 150, paddingTop: 20 }}>
+          <div style={{ marginLeft: 15 }}>
+            <div>
+              <input onChange={this.handleInput} />
+              <Button size="sm" onClick={this.handleClick}>Add Friend</Button>
+            </div>
+            <FriendsList
+              username={username}
+              friends={allFriends}
+              received={receivedFriendRequests}
+              sent={sentFriendRequests}
+              accept={this.acceptFriendRequest}
+              remove={this.removeFriend}
+            />
+          </div>
+        </div>
       </div>
     );
   }

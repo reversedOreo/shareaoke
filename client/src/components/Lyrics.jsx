@@ -1,12 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 
 class Lyrics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: `${this.props.queryData.title} ${this.props.queryData.artist}`,
-      lyrics: 'Show Lyircs',
+      query: '',
+      lyrics: '',
     };
     // this.SongData = this.SongData.bind(this);
     this.Search = this.Search.bind(this);
@@ -14,18 +15,15 @@ class Lyrics extends React.Component {
 
   Search() {
     const { query } = this.state;
-    console.log(query);
-    // this.setState({ lyrics: 'changed' });
+    const { queryData } = this.props;
     axios
       .get('/api/lyrics', {
         params: {
-          query,
+          query: `${queryData.title} ${queryData.artist}`,
         },
       })
       .then(response => {
         // eslint-disable-next-line no-alert
-        alert('Lyrics Received');
-        console.log(response);
         this.setState({
           lyrics: response.data,
         });
@@ -40,8 +38,11 @@ class Lyrics extends React.Component {
   render() {
     const { lyrics } = this.state;
     return (
-      <div onClick={this.Search}>
-        {lyrics}
+      <div>
+        <Button onClick={this.Search}>Refresh lyrics</Button>
+        <div>
+          {lyrics}
+        </div>
       </div>
     );
   }
