@@ -22,7 +22,7 @@ class PlaylistSongs extends React.Component {
   }
 
   render() {
-    const { playlist } = this.props;
+    const { playlist, username, id_user } = this.props;
     const { image } = this.state;
 
     return (
@@ -37,6 +37,8 @@ class PlaylistSongs extends React.Component {
                 pathname: '/playlist',
                 state: {
                   playlist,
+                  username,
+                  id_user,
                 },
               }}
             > {playlist.name}

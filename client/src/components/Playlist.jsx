@@ -2,6 +2,8 @@
 import React from 'react';
 import axios from 'axios';
 import Jumbotron from 'react-bootstrap/Jumbotron';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { Link } from 'react-router-dom';
 import Songs from './Songs.jsx';
 import Lyrics from './Lyrics.jsx';
 
@@ -60,6 +62,61 @@ class Playlist extends React.Component {
 
     return (
       <div>
+        <Breadcrumb>
+          <Breadcrumb.Item>
+            <Link to="/main">
+              Home
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/createplaylist',
+              state: {
+                id_user: this.props.location.state.id_user,
+                username: this.props.location.state.username,
+              },
+            }}
+            >
+                Create playlist
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/search',
+              state: {
+                id_user: this.props.location.state.id_user,
+                username: this.props.location.state.username,
+              },
+            }}
+            >
+                Search
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/playlists',
+              state: {
+                id_user: this.props.location.state.id_user,
+                username: this.props.location.state.username,
+              },
+            }}
+            >
+                Playlists
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/friends',
+              state: {
+                id_user: this.props.location.state.id_user,
+                username: this.props.location.state.username,
+              },
+            }}
+            >
+                Friends
+            </Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <Jumbotron style={{ textAlign: 'center', background: 'orange' }}>
           <h1 style={{ color: 'white' }}>{currentPlaylist}</h1>
           <p style={{ color: 'white' }}>{description}</p>
