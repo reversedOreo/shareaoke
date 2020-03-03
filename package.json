@@ -36,6 +36,7 @@
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.4",
     "csv-parser": "^2.3.2",
+    "csv2json": "^2.0.2",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
@@ -46,9 +47,11 @@
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
+    "react-file-reader": "^1.1.4",
     "react-router-dom": "^5.1.2",
-    "request": "^2.83.0",
+    "request": "^2.88.2",
     "request-promise": "^4.2.5",
+    "requirejs": "^2.3.6",
     "spotify-web-api-js": "^0.22.1"
   }
 }
