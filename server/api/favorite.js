@@ -33,7 +33,6 @@ favRouter.get('/', (req, res) => {
     })
     .catch(() => {
       res.send('error getting favorited playlist');
-      console.log('test git');
     });
 });
 
