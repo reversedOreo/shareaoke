@@ -10,7 +10,14 @@ const request = require('request');
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 
-
+// request('https://spotifycharts.com/regional/global/daily/latest').pipe(csv(fs.createWriteStream('./data.csv')))
+//   .on('data', (row) => {
+//     //var allVehicles = JSON.parse(row)
+//     console.log(row);
+//   })
+//   .on('end', () => {
+//     console.log('CSV file successfully processed');
+//   })
 // app.set('view engine', 'html');
 
 const PORT = 8080;
