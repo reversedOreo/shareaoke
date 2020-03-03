@@ -49,6 +49,13 @@ class Main extends React.Component {
                 </Button>
               </Link>
             </li>
+            <li style={{ paddingBottom: 10 }}>
+              <Link to={{ pathname: '/chart', state: { username, token, id_user } }}>
+                <Button variant="success">
+                  chart
+                </Button>
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
