@@ -1,57 +1,61 @@
 import React from 'react';
+import axios from 'axios';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import FusionCharts from 'fusioncharts/core';
 import PowerCharts from 'fusioncharts/fusioncharts.powercharts';
-import Bar2D from 'fusioncharts/viz/bar2d';
+import Bar2d from 'fusioncharts/viz/bar2d';
 import FusionTheme from 'fusioncharts/themes/es/fusioncharts.theme.fusion';
 import ReactFC from "react-fusioncharts";
-ReactFC.fcRoot(FusionCharts, Bar2D, FusionTheme, PowerCharts);
+ReactFC.fcRoot(FusionCharts, Bar2d, FusionTheme, PowerCharts);
 
 class Chart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      playlistName: '',
-      description: '',
-    };
+      topSongs: ""
+    }
   }
-
-  chartData = 
-      [{
-      "label": "Sarahah",
-      "value": "3880000"
-    }, {
-      "label": "Messenger",
-      "value": "2570000"
-    }, {
-      "label": "Snake vs Block",
-      "value": "2420000"
-    }, {
-      "label": "Facebook",
-      "value": "2140000"
-    }, {
-      "label": "Amazon",
-      "value": "1830000"
-    }, {
-      "label": "Spotify Music",
-      "value": "1540000"
-    }, {
-      "label": "Netflix",
-      "value": "1530000"
-    }, {
-      "label": "Word Connect",
-      "value": "1440000"
-    }, {
-      "label": "Pandora",
-      "value": "1300000"
-    }, {
-      "label": "WhatsApp Messenger",
-      "value": "1210000"
-    }]
+   componentDidMount() {
+     this.ArtistsInfo().then((data) => {
+       this.setState({
+        topSongs: data
+        })
+      }
+    )
+   }
+   
+  //gets all the artist information from the api and formats it for use in FusionChart
+   ArtistsInfo () {
+     return axios.get("/chart/Music")
+       .then((artistInfo) => {
+         //put data(nestedObjects) inside an array
+         let artist = artistInfo.data
+         let arr = []
+         let keys = Object.keys(artist);
+         for (var i = 0; i <= keys.length - 1; i++) {
+           var key = keys[i];
+           arr[key] = artist[key];
+         }
+         return arr;
+       }).then((data) => {
+         //access each artist specific info in the array of objects 
+         //and push it in a new array
+         let newArr = []
+          data.forEach(function (character) {
+              let obj = {
+              "label": `${character.artist}` + ":" + " " + `${character.title}`,
+              "value": `${character["weeks on chart"]}`
+                }
+           newArr.push(obj)
+          });
+         return newArr;
+        })
+      }
   
-  chartConfigs = {
+chartConfigs(){
+   let configs = {
     renderAt: "chart-container",
     type: "bar2d",
     width: "100%",
@@ -85,18 +89,18 @@ class Chart extends React.Component {
         "plotFillAlpha": "90",
         "theme": "ocean"
       },
-      "data": this.chartData
+      "data": this.state.topSongs
     }
-
   }
+  return configs
+}
 
-render(){
+  render() {
   return (
     <div>
-      <ReactFC {...this.chartConfigs} />
+      <ReactFC {...this.chartConfigs()} />
     </div>
         )
-    }
   }
-
+}
 export default Chart;

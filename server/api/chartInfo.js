@@ -2,6 +2,11 @@ const { Router } = require('express');
 const chartRouter = Router()
 const axios = require('axios');
 
+
+
+var fs = require('fs');
+
+
  chartRouter.get('/Music', (req, res) => {
    const urlGit = "https://billboard-api2.p.rapidapi.com/hot-100";
    const options = {
@@ -17,8 +22,9 @@ const axios = require('axios');
 
    axios.get(urlGit, options, req, res)
      .catch(err => { console.log(err) })
-     .then((gitResponse) => {
-       const repos = gitResponse.data.content; //this is an array
+     .then((artist) => {
+
+       const repos = artist.data.content; //this is an array
        res.send(repos)
      });
  })
