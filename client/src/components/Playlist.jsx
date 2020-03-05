@@ -18,17 +18,22 @@ class Playlist extends React.Component {
       playlistSongs: [],
       uri: '',
       clickedSong: {},
+      userId: 0,
+      username: 'guest',
     };
     this.displayClickedSong = this.displayClickedSong.bind(this);
     this.getSongs = this.getSongs.bind(this);
   }
 
   componentDidMount() {
+    console.log(this.props.match.params.id || 'blank');
     if (this.props.location.state.playlist) {
       this.setState({
         currentPlaylist: this.props.location.state.playlist.name,
         description: this.props.location.state.playlist.description,
         playlistId: this.props.location.state.playlist.id,
+        userId: this.props.location.state.id_user,
+        username: this.props.location.state.username,
       }, () => {
         this.getSongs();
       });
@@ -57,7 +62,7 @@ class Playlist extends React.Component {
 
   render() {
     const {
-      currentPlaylist, description, playerDisplay, playlistSongs, uri, clickedSong,
+      currentPlaylist, description, playerDisplay, playlistSongs, uri, clickedSong, userId, username,
     } = this.state;
 
     return (
@@ -72,8 +77,8 @@ class Playlist extends React.Component {
             <Link to={{
               pathname: '/createplaylist',
               state: {
-                id_user: this.props.location.state.id_user,
-                username: this.props.location.state.username,
+                id_user: userId,
+                username,
               },
             }}
             >
@@ -84,8 +89,8 @@ class Playlist extends React.Component {
             <Link to={{
               pathname: '/search',
               state: {
-                id_user: this.props.location.state.id_user,
-                username: this.props.location.state.username,
+                id_user: userId,
+                username,
               },
             }}
             >
@@ -96,8 +101,8 @@ class Playlist extends React.Component {
             <Link to={{
               pathname: '/playlists',
               state: {
-                id_user: this.props.location.state.id_user,
-                username: this.props.location.state.username,
+                id_user: userId,
+                username,
               },
             }}
             >
@@ -108,8 +113,8 @@ class Playlist extends React.Component {
             <Link to={{
               pathname: '/friends',
               state: {
-                id_user: this.props.location.state.id_user,
-                username: this.props.location.state.username,
+                id_user: userId,
+                username,
               },
             }}
             >
