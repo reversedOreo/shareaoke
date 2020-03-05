@@ -24,10 +24,18 @@ class SharedPlaylist extends React.Component {
     this.displayClickedSong = this.displayClickedSong.bind(this);
     this.getSongs = this.getSongs.bind(this);
     this.buildPlaylist = this.buildPlaylist.bind(this);
+    this.getPlaylist = this.getPlaylist.bind(this);
   }
 
   componentDidMount() {
-    this.buildPlaylist();
+    this.getPlaylist(this.props.match.params.playlistid);
+  }
+
+  getPlaylist(playlistId) {
+    axios.get(`/api/playlist/getplaylist/${playlistId}`)
+      .then((playlist) => {
+        this.buildPlaylist(playlist.data[0]);
+      });
   }
 
   getSongs() {
@@ -50,15 +58,14 @@ class SharedPlaylist extends React.Component {
     });
   }
 
-  buildPlaylist() {
-    const { playlistid } = this.props.match.params;
-    console.log(this.props.match.params.userid || 'blank');
+  buildPlaylist({ name, id, description }) {
+    // console.log(this.props.match.params.userid || 'blank');
     this.setState({
-      currentPlaylist: 'dis name',
-      description: 'dis description',
-      playlistId: playlistid,
-      userId: 1,
-      username: 'thisuser',
+      currentPlaylist: name,
+      description,
+      playlistId: id,
+      userId: -1,
+      username: 'guest',
     }, () => {
       this.getSongs();
     });
@@ -71,61 +78,6 @@ class SharedPlaylist extends React.Component {
 
     return (
       <div>
-        <Breadcrumb>
-          <Breadcrumb.Item>
-            <Link to="/main">
-              Home
-            </Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to={{
-              pathname: '/createplaylist',
-              state: {
-                id_user: userId,
-                username,
-              },
-            }}
-            >
-                Create playlist
-            </Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to={{
-              pathname: '/search',
-              state: {
-                id_user: userId,
-                username,
-              },
-            }}
-            >
-                Search
-            </Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to={{
-              pathname: '/playlists',
-              state: {
-                id_user: userId,
-                username,
-              },
-            }}
-            >
-                Playlists
-            </Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to={{
-              pathname: '/friends',
-              state: {
-                id_user: userId,
-                username,
-              },
-            }}
-            >
-                Friends
-            </Link>
-          </Breadcrumb.Item>
-        </Breadcrumb>
         <Jumbotron style={{ textAlign: 'center', background: 'orange' }}>
           <h1 style={{ color: 'white' }}>{currentPlaylist}</h1>
           <p style={{ color: 'white' }}>{description}</p>
