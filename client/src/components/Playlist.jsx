@@ -127,6 +127,16 @@ class Playlist extends React.Component {
           <h1 style={{ color: 'white' }}>{currentPlaylist}</h1>
           <p style={{ color: 'white' }}>{description}</p>
         </Jumbotron>
+        <TwitterShareButton
+          url="www.twitter.com"
+          title={`Check out my awesome shareaoke playlist!!! http://localhost:8080/#/sharedplaylist/${playlistId}/`}
+          className="Demo__some-network__share-button"
+        >
+          <TwitterIcon
+            size={64}
+            round
+          />
+        </TwitterShareButton>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {playlistSongs.map(song => <Songs key={song.id} song={song} display={this.displayClickedSong} />)}
@@ -141,16 +151,6 @@ class Playlist extends React.Component {
               : null}
           </div>
         </div>
-        <TwitterShareButton
-          url="www.twitter.com"
-          title={`Check out my awesome shareaoke playlist!!! http://localhost:8080/#/sharedplaylist/${playlistId}/`}
-          className="Demo__some-network__share-button"
-        >
-          <TwitterIcon
-            size={32}
-            round
-          />
-        </TwitterShareButton>
         {playerDisplay ? 
           <Lyrics queryData={clickedSong} />
           : null}
