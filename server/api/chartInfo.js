@@ -21,8 +21,8 @@ const { selectSongsFromDatabase } = require('../db/index')
      .catch(err => { console.log(err) })
      .then((artist) => {
 
-       const repos = artist.data.content; //this is an array
-       res.send(repos)
+       const songs = artist.data.content; //this is an array
+       res.send(songs)
      });
  })
 
