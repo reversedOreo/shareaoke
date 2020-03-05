@@ -2,11 +2,6 @@ const { Router } = require('express');
 const chartRouter = Router()
 const axios = require('axios');
 
-
-
-var fs = require('fs');
-
-
  chartRouter.get('/Music', (req, res) => {
    const urlGit = "https://billboard-api2.p.rapidapi.com/hot-100";
    const options = {
