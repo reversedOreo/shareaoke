@@ -178,11 +178,12 @@ const deleteFavorite = (userId, playlistId) => {
 };
 
 const getFavorites = userId => {
-  const mysqlQuery = `SELECT * FROM playlist 
-                      WHERE id IN
-                      (
-                        SELECT playlist_id FROM favorite WHERE user_id = ?
-                      )`;
+  const mysqlQuery = `
+  SELECT * FROM playlist 
+  WHERE id IN
+  (
+    SELECT playlist_id FROM favorite WHERE user_id = ?
+  )`;
   return query(mysqlQuery, [userId]);
 };
 
