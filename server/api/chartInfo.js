@@ -28,22 +28,21 @@ const { selectSongsFromDatabase } = require('../db/index')
 
 chartRouter.get('/sqlMusic', (req, res) => {
   mostSongsInPlaylist().then((data) => {
-    let songDataCount = data.map((eachSongCount) => {
-        let songCount = eachSongCount
-      return songCount;
-      })
-      let songDataId = data.map((eachSongId) => {
-        let songId = eachSongId.id_song
-        return songId;
-      })
+    let songDataId = data.map((eachSongId) => {
+      let songId = eachSongId.id_song
+      return songId;
+    })
       
-    return selectSongsFromDatabase(songDataId).then((songs) => {
+     return selectSongsFromDatabase(songDataId).then((songs) => {
+       let songDataCount = data.map((eachSongCount) => {
+         let songCount = eachSongCount
+         return songCount;
+       })
       return songs.map((singleSong) => {
         songDataCount.map((singleSongData) =>{
           if (singleSong.id === singleSongData.id_song){
-            return singleSong;
+            return singleSong.songCountNumber = singleSongData.numberSongs
           }
-          return singleSong.songCountNumber = singleSongData.numberSongs
         })
         return singleSong;
         })
