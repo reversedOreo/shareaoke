@@ -2,6 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 class Friend extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class Friend extends React.Component {
       friendPlaylists: [],
     };
     this.handleShowPlaylists = this.handleShowPlaylists.bind(this);
+    this.handleFriendPlaylistClick = this.handleFriendPlaylistClick.bind(this);
   }
 
   componentDidMount() {
@@ -23,7 +25,7 @@ class Friend extends React.Component {
       .then((p) => p.data)
       .then(playlists => {
         this.setState({
-          friendPlaylists: playlists
+          friendPlaylists: playlists,
         });
       })
       .catch((err) => console.error(err));
@@ -36,6 +38,11 @@ class Friend extends React.Component {
     });
   }
 
+  handleFriendPlaylistClick(event) {
+    console.log(event.target.getAttribute('data-playlist'));
+    console.log(event.target.getAttribute('data-friend'));
+  }
+
   render() {
     const { friend, remove } = this.props;
     const { showPlaylist, friendPlaylists } = this.state;
@@ -44,7 +51,21 @@ class Friend extends React.Component {
         <div>{friend.username}</div>
         <Button variant="success" size="sm" onClick={this.handleShowPlaylists}>See Playlists</Button>
         <Button variant="danger" size="sm" onClick={() => remove(friend.id)}>Remove Friend</Button>
-        <div>{showPlaylist && friendPlaylists.map((playlist) => (<div key={playlist.id}>{playlist.name}</div>))}</div>
+        <div>{showPlaylist && friendPlaylists.map((playlist) => (
+          <div key={playlist.id}>
+            <Link
+              to={{
+                pathname: '/playlist',
+                state: {
+                  playlist,
+                },
+              }} 
+            >
+            <li data-playlist={playlist.id} data-friend={friend.id} onClick={this.handleFriendPlaylistClick}>{playlist.name}</li>
+            </Link>
+          </div>
+        ))}
+        </div>
       </div>
     );
   }

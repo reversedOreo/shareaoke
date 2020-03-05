@@ -142,7 +142,7 @@ class Friend extends React.Component {
               },
             }}
             >
-                Create playlist
+              Create playlist
             </Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
@@ -154,7 +154,7 @@ class Friend extends React.Component {
               },
             }}
             >
-                Search
+              Search
             </Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
@@ -166,7 +166,7 @@ class Friend extends React.Component {
               },
             }}
             >
-                Playlists
+              Playlists
             </Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>Friends</Breadcrumb.Item>
