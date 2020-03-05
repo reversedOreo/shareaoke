@@ -15,9 +15,6 @@ class Playlists extends React.Component {
 
   componentDidMount() {
     const { id_user } = this.props.location.state;
-
-    console.log("GOKU", id_user);
-
     axios.get(`/api/playlist/${id_user}`)
       .then(playlists => this.setState({ playlists: playlists.data }))
       .catch(err => console.error(err));
@@ -27,6 +24,7 @@ class Playlists extends React.Component {
   render() {
     const { playlists } = this.state;
     const { username } = this.props.location.state;
+    const { id_user } = this.props.location.state;
 
     return (
       <div>
@@ -40,8 +38,8 @@ class Playlists extends React.Component {
             <Link to={{
               pathname: '/createplaylist',
               state: {
-                id_user: this.props.location.state.id_user,
-                username: this.props.location.state.username,
+                id_user,
+                username,
               },
             }}
             >
@@ -52,8 +50,8 @@ class Playlists extends React.Component {
             <Link to={{
               pathname: '/search',
               state: {
-                id_user: this.props.location.state.id_user,
-                username: this.props.location.state.username,
+                id_user,
+                username,
               },
             }}
             >
@@ -65,8 +63,8 @@ class Playlists extends React.Component {
             <Link to={{
               pathname: '/friends',
               state: {
-                id_user: this.props.location.state.id_user,
-                username: this.props.location.state.username,
+                id_user,
+                username,
               },
             }}
             >
@@ -78,7 +76,7 @@ class Playlists extends React.Component {
           <h3 style={{ fontSize: 50, color: 'white', marginLeft: 35 }}>{`${username}'s playlists`}</h3>
         </div>
         <div style={{ height: 1200, background: '#ebeef2', marginLeft: 150, marginRight: 150, paddingTop: 20, display: 'flex', flexFlow: 'row wrap', justifyContent: 'center' }}>
-          {playlists.map(playlist => <PlaylistSongs username={this.props.location.state.username} id_user={this.props.location.state.id_user} playlist={playlist} />)}
+          {playlists.map(playlist => <PlaylistSongs username={username} id_user={id_user} playlist={playlist} />)}
         </div>
       </div>
     );
