@@ -100,7 +100,7 @@ class App extends React.Component {
           <Route exact path="/createplaylist" render={(routerProps) => (<CreatePlaylist {...routerProps} username={username} id_user={id_user} token={token} />)} />
           <Route exact path="/playlist/" render={(routerProps) => (<Playlist {...routerProps} username={username} id_user={id_user} token={token} />)} />
           <Route exact path="/search" render={(routerProps) => (<SearchForSongs {...routerProps} username={username} id_user={id_user} token={token} />)} />
-          <Route exact path="/sharedplaylist/:userid/:playlistid" render={(routerProps) => (<SharedPlaylist {...routerProps} />)} />
+          <Route exact path="/sharedplaylist/:playlistid" render={(routerProps) => (<SharedPlaylist {...routerProps} />)} />
         </Switch>
       </HashRouter>
     );
