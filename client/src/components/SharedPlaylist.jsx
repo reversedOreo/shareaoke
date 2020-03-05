@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Songs from './Songs.jsx';
 import Lyrics from './Lyrics.jsx';
 
-class Playlist extends React.Component {
+class SharedPlaylist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,21 +23,11 @@ class Playlist extends React.Component {
     };
     this.displayClickedSong = this.displayClickedSong.bind(this);
     this.getSongs = this.getSongs.bind(this);
+    this.buildPlaylist = this.buildPlaylist.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.id || 'blank');
-    if (this.props.location.state.playlist) {
-      this.setState({
-        currentPlaylist: this.props.location.state.playlist.name,
-        description: this.props.location.state.playlist.description,
-        playlistId: this.props.location.state.playlist.id,
-        userId: this.props.location.state.id_user,
-        username: this.props.location.state.username,
-      }, () => {
-        this.getSongs();
-      });
-    }
+    this.buildPlaylist();
   }
 
   getSongs() {
@@ -57,6 +47,20 @@ class Playlist extends React.Component {
       playerDisplay: true,
       uri: uri.replace('spotify:track:', ''),
       clickedSong: song,
+    });
+  }
+
+  buildPlaylist() {
+    const { playlistid } = this.props.match.params;
+    console.log(this.props.match.params.userid || 'blank');
+    this.setState({
+      currentPlaylist: 'dis name',
+      description: 'dis description',
+      playlistId: playlistid,
+      userId: 1,
+      username: 'thisuser',
+    }, () => {
+      this.getSongs();
     });
   }
 
@@ -148,4 +152,4 @@ class Playlist extends React.Component {
   }
 }
 
-export default Playlist;
+export default SharedPlaylist;

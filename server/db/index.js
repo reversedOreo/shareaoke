@@ -167,6 +167,26 @@ const checkPendingRequests = (id_sender, id_recipient) => {
   return query(mysqlQuery, [id_sender, id_recipient, id_sender, id_recipient]);
 };
 
+const postFavorite = (userId, playlistId) => {
+  const mysqlQuery = 'INSERT INTO favorite VALUES (?, ?);';
+  return query(mysqlQuery, [userId, playlistId]);
+};
+
+const deleteFavorite = (userId, playlistId) => {
+  const mysqlQuery = 'DELETE FROM favorite WHERE user_id = ? AND playlist_id = ?;';
+  return query(mysqlQuery, [userId, playlistId]);
+};
+
+const getFavorites = userId => {
+  const mysqlQuery = `
+  SELECT * FROM playlist 
+  WHERE id IN
+  (
+    SELECT playlist_id FROM favorite WHERE user_id = ?
+  )`;
+  return query(mysqlQuery, [userId]);
+};
+
 module.exports = {
   // users
   createUser,
@@ -189,4 +209,8 @@ module.exports = {
   showSentRequests,
   showReceivedRequests,
   checkPendingRequests,
+  // favorite
+  postFavorite,
+  deleteFavorite,
+  getFavorites,
 };

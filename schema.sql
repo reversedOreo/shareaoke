@@ -42,6 +42,14 @@ CREATE TABLE `playlist_song` (
   `id_song` int NOT NULL
 );
 
+CREATE TABLE favorite (
+  user_id int(10) NOT NULL,
+  playlist_id int(10) NOT NULL,
+  PRIMARY KEY (user_id, playlist_id),
+  CONSTRAINT FK_users FOREIGN KEY (user_id) REFERENCES user(id),
+  CONSTRAINT FK_playlist FOREIGN KEY (playlist_id) REFERENCES  playlist(id)
+);
+
 ALTER TABLE `friend` ADD FOREIGN KEY (`id_sender`) REFERENCES `user` (`id`);
 
 ALTER TABLE `friend` ADD FOREIGN KEY (`id_recipient`) REFERENCES `user` (`id`);

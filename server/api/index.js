@@ -4,6 +4,7 @@ const { songRouter } = require('./song');
 const { playlistRouter } = require('./playlist');
 const { friendRouter } = require('./friend');
 const { lyricsRouter } = require('./lyrics');
+const { favRouter } = require('./favorite');
 
 const apiRouter = Router();
 
@@ -12,5 +13,6 @@ apiRouter.use('/song', songRouter);
 apiRouter.use('/playlist', playlistRouter);
 apiRouter.use('/friend', friendRouter);
 apiRouter.use('/lyrics', lyricsRouter);
+apiRouter.use('/favorite', favRouter);
 
 module.exports.apiRouter = apiRouter;
