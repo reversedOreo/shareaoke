@@ -188,6 +188,11 @@ const getFavorites = userId => {
   return query(mysqlQuery, [userId]);
 };
 
+const getPlaylist = playlistId => {
+  const mysqlQuery = 'SELECT * FROM playlist WHERE id = ?';
+  return query(mysqlQuery, [playlistId]);
+};
+
 module.exports = {
   // users
   createUser,
@@ -202,6 +207,7 @@ module.exports = {
   removeSongFromPlaylist,
   showUserPlaylist,
   showPlaylistSongs,
+  getPlaylist,
   // friends
   sendFriendRequest,
   acceptFriendRequest,

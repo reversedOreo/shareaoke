@@ -4,6 +4,7 @@ import axios from 'axios';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
+import { TwitterShareButton, TwitterIcon } from 'react-share';
 import Songs from './Songs.jsx';
 import Lyrics from './Lyrics.jsx';
 
@@ -62,7 +63,7 @@ class Playlist extends React.Component {
 
   render() {
     const {
-      currentPlaylist, description, playerDisplay, playlistSongs, uri, clickedSong, userId, username,
+      currentPlaylist, description, playerDisplay, playlistSongs, uri, clickedSong, userId, username, playlistId
     } = this.state;
 
     return (
@@ -140,6 +141,16 @@ class Playlist extends React.Component {
               : null}
           </div>
         </div>
+        <TwitterShareButton
+          url="www.twitter.com"
+          title={`Check out my awesome shareaoke playlist!!! http://localhost:8080/#/sharedplaylist/${playlistId}/`}
+          className="Demo__some-network__share-button"
+        >
+          <TwitterIcon
+            size={32}
+            round
+          />
+        </TwitterShareButton>
         {playerDisplay ? 
           <Lyrics queryData={clickedSong} />
           : null}

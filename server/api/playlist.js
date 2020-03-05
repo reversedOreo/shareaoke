@@ -6,6 +6,7 @@ const {
   addSongToPlaylist,
   showUserPlaylist,
   showPlaylistSongs,
+  getPlaylist,
 } = require('../db');
 
 const playlistRouter = Router();
@@ -90,6 +91,17 @@ playlistRouter.get('/songs/:id_playlist', (req, res) => {
   showPlaylistSongs(req.params.id_playlist)
     .then((songs) => {
       res.send(songs);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+playlistRouter.get('/getplaylist/:playlistid', (req, res) => {
+  getPlaylist(req.params.playlistid)
+    .then((playlist) => {
+      res.send(playlist);
     })
     .catch((err) => {
       console.log(err);
