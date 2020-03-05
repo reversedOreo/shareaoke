@@ -9,7 +9,7 @@ import Playlists from './Playlists.jsx';
 import CreatePlaylist from './CreatePlaylist.jsx';
 import Playlist from './Playlist.jsx';
 import SearchForSongs from './SearchForSongs.jsx';
-
+import SharedPlaylist from './SharedPlaylist.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -44,7 +44,6 @@ class App extends React.Component {
       .then(() => {
         this.getUserInfo();
       });
-
   }
 
   getUserInfo() {
@@ -97,8 +96,9 @@ class App extends React.Component {
           <Route exact path="/playlists" render={(routerProps) => (<Playlists {...routerProps} username={username} id_user={id_user} token={token} playlists={playlists} />)} />
           <Route exact path="/friends" render={(routerProps) => (<Friends {...routerProps} username={username} id_user={id_user} token={token} />)} />
           <Route exact path="/createplaylist" render={(routerProps) => (<CreatePlaylist {...routerProps} username={username} id_user={id_user} token={token} />)} />
-          <Route exact path="/playlist" render={(routerProps) => (<Playlist {...routerProps} username={username} id_user={id_user} token={token} />)} />
+          <Route exact path="/playlist/" render={(routerProps) => (<Playlist {...routerProps} username={username} id_user={id_user} token={token} />)} />
           <Route exact path="/search" render={(routerProps) => (<SearchForSongs {...routerProps} username={username} id_user={id_user} token={token} />)} />
+          <Route exact path="/sharedplaylist/:userid/:playlistid" render={(routerProps) => (<SharedPlaylist {...routerProps} />)} />
         </Switch>
       </HashRouter>
     );
