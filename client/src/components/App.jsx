@@ -9,6 +9,7 @@ import Playlists from './Playlists.jsx';
 import CreatePlaylist from './CreatePlaylist.jsx';
 import Playlist from './Playlist.jsx';
 import SearchForSongs from './SearchForSongs.jsx';
+import Chart from './Chart.jsx'
 import SharedPlaylist from './SharedPlaylist.jsx';
 
 class App extends React.Component {
@@ -91,6 +92,7 @@ class App extends React.Component {
     return (
       <HashRouter>
         <Switch>
+          <Route exact path="/chart" render={(routerProps) => (<Chart {...routerProps} username={username} id_user={id_user} token={token} />)} ></Route>
           <Route exact path="/" component={SignUpLogin} />
           <Route exact path="/main" render={(routerProps) => (<Main {...routerProps} username={username} id_user={id_user} token={token} />)} />
           <Route exact path="/playlists" render={(routerProps) => (<Playlists {...routerProps} username={username} id_user={id_user} token={token} playlists={playlists} />)} />

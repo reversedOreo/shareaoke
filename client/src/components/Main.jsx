@@ -1,8 +1,16 @@
 import React from 'react';
+import { ReactFileReader } from 'react-file-reader'
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+//import { Request } from 'request';
 
 class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  
+  }
   render() {
     const { username, token, id_user } = this.props;
     return (
@@ -38,6 +46,13 @@ class Main extends React.Component {
               <Link to={{ pathname: '/friends', state: { username, id_user } }}>
                 <Button variant="success">
                   Friends
+                </Button>
+              </Link>
+            </li>
+            <li style={{ paddingBottom: 10 }}>
+              <Link to={{ pathname: '/chart', state: { username, token, id_user } }}>
+                <Button variant="success">
+                  chart
                 </Button>
               </Link>
             </li>
