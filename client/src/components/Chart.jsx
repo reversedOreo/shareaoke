@@ -3,6 +3,7 @@ import axios from 'axios';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+
 import FusionCharts from 'fusioncharts/core';
 import PowerCharts from 'fusioncharts/fusioncharts.powercharts';
 import Bar3d from 'fusioncharts/viz/bar3d';
@@ -177,38 +178,6 @@ class Chart extends React.Component {
           <Breadcrumb.Item>
             <Link to="/main">
               Home
-            </Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to={{
-              pathname: '/createplaylist',             
-            }}
-            >
-              Create playlist
-            </Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to={{
-              pathname: '/search',      
-            }}
-            >
-              Search
-            </Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to={{
-              pathname: '/playlists',          
-            }}
-            >
-              Playlists
-            </Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to={{
-              pathname: '/friends',
-            }}
-            >
-              Friends
             </Link>
           </Breadcrumb.Item>
         </Breadcrumb>
