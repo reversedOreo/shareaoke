@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import FusionCharts from 'fusioncharts/core';
 import PowerCharts from 'fusioncharts/fusioncharts.powercharts';
-import Bar2d from 'fusioncharts/viz/bar3d';
+import Bar3d from 'fusioncharts/viz/bar3d';
 import Pie3d from 'fusioncharts/viz/pie3d';
 import FusionTheme from 'fusioncharts/themes/es/fusioncharts.theme.fusion';
 import ReactFC from "react-fusioncharts";
-ReactFC.fcRoot(FusionCharts, Bar2d, Pie3d, FusionTheme, PowerCharts);
+ReactFC.fcRoot(FusionCharts, Bar3d, Pie3d, FusionTheme, PowerCharts);
 
 class Chart extends React.Component {
   constructor(props) {
