@@ -1,5 +1,10 @@
 const { Router } = require('express');
-const { postFavorite, deleteFavorite, getFavorites } = require('../db/index');
+const {
+  postFavorite,
+  deleteFavorite,
+  getFavorites,
+  checkIfFavorited,
+} = require('../db/index');
 
 const favRouter = Router();
 
@@ -33,6 +38,21 @@ favRouter.get('/:id', (req, res) => {
     })
     .catch(() => {
       res.send('error getting favorited playlist');
+    });
+});
+
+favRouter.get('/isfavorited/:userid/:playlistid', (req, res) => {
+  const { userid, playlistid } = req.params;
+  checkIfFavorited(userid, playlistid)
+    .then((favStatus) => {
+      if (favStatus.length) {
+        res.send(true);
+      } else {
+        res.send(false);
+      }
+    })
+    .catch(() => {
+      res.send('error checking favorite status');
     });
 });
 
