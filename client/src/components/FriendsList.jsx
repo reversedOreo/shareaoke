@@ -45,7 +45,7 @@ class FriendsList extends React.Component {
       <div>
         <h3>{`${username}'s Friends`}</h3>
         {!friends.length && <h5>Nope. No friends here.</h5>}
-        <div>{friends.map(friend => (<Friend key={friend.id} friend={friend} remove={remove} playlists={playlists} />))}</div>
+        <div>{friends.map(friend => (<Friend userId={this.props.userId} key={friend.id} friend={friend} remove={remove} playlists={playlists} />))}</div>
         <div>{this.setFriends('Received', received, 'Accept', accept, 'Decline', remove, receivedMessage)}</div>
         <div>{this.setFriends('Sent', sent, null, null, 'Cancel', remove, sentMessage)}</div>
       </div>

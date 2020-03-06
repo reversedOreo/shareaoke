@@ -46,7 +46,6 @@ class PlaylistSongs extends React.Component {
             > {playlist.name}
             </Link>
           </Button>
-          <FavButton />
         </Card.Body>
       </Card>
     );

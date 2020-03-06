@@ -44,7 +44,7 @@ class Friend extends React.Component {
   }
 
   render() {
-    const { friend, remove } = this.props;
+    const { friend, remove, userId } = this.props;
     const { showPlaylist, friendPlaylists } = this.state;
     return (
       <div>
@@ -57,9 +57,11 @@ class Friend extends React.Component {
               to={{
                 pathname: '/playlist',
                 state: {
+                  id_user: userId,
+                  friend: true,
                   playlist,
                 },
-              }} 
+              }}
             >
             <li data-playlist={playlist.id} data-friend={friend.id} onClick={this.handleFriendPlaylistClick}>{playlist.name}</li>
             </Link>
