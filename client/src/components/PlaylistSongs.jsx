@@ -38,6 +38,7 @@ class PlaylistSongs extends React.Component {
               to={{
                 pathname: '/playlist',
                 state: {
+                  friend: this.props.friend,
                   playlist,
                   username,
                   id_user,
