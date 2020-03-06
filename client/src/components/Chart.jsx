@@ -173,6 +173,45 @@ class Chart extends React.Component {
   render() {
     return (
       <div>
+        <Breadcrumb>
+          <Breadcrumb.Item>
+            <Link to="/main">
+              Home
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/createplaylist',             
+            }}
+            >
+              Create playlist
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/search',      
+            }}
+            >
+              Search
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/playlists',          
+            }}
+            >
+              Playlists
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={{
+              pathname: '/friends',
+            }}
+            >
+              Friends
+            </Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
       <div>
         <ReactFC {...this.chartConfigs()} />
       </div>
