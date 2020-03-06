@@ -91,7 +91,7 @@ class Playlists extends React.Component {
         <div style={{ height: 1200, background: '#ebeef2', marginLeft: 150, marginRight: 150, paddingTop: 20, display: 'flex', flexFlow: 'row wrap', justifyContent: 'center' }}>
           {playlists.map(playlist => <PlaylistSongs username={username} id_user={id_user} playlist={playlist} />)}
           {/* only render if looking at user playlist not friend's */}
-          {favPlaylists.map(playlist => <PlaylistSongs username={username} id_user={id_user} playlist={playlist} />)}
+          {favPlaylists.map(playlist => <PlaylistSongs friend username={username} id_user={id_user} playlist={playlist} />)}
         </div>
       </div>
     );

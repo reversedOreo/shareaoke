@@ -27,7 +27,7 @@ class PlaylistSongs extends React.Component {
     const { image } = this.state;
 
     return (
-      <Card style={{ width: '15rem', height: '28rem', marginRight: 10, marginLeft: 10, border: 'black' }}>
+      <Card style={{ width: '15rem', height: '25rem', marginRight: 10, marginLeft: 10, border: 'black' }}>
         <Card.Img variant="top" src={image} />
         <Card.Body>
           <Card.Title>{playlist.name}</Card.Title>
@@ -38,6 +38,7 @@ class PlaylistSongs extends React.Component {
               to={{
                 pathname: '/playlist',
                 state: {
+                  friend: this.props.friend,
                   playlist,
                   username,
                   id_user,
