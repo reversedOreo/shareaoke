@@ -37,6 +37,20 @@ const findUser = (username) => {
 };
 
 // songs
+const mostSongsInPlaylist = () => {
+  const mysqlQuery = "SELECT id_song, COUNT(id_song) AS numberSongs FROM playlist_song GROUP BY id_song HAVING COUNT(id_song) > 1";
+  return query(mysqlQuery)
+}
+
+const selectSongsFromDatabase = (ids) => {
+  // const yo = []
+  // yo.push(id)
+  const mysqlQuery = 'SELECT * FROM song WHERE id in (?);';
+  return query(mysqlQuery, [ids])
+}
+
+
+
 const addSong = (title, album, artist, imageURL, uri) => {
   const mysqlQuery = 'INSERT INTO song VALUES(null, ?, ?, ?, ?, ?);';
   return query(mysqlQuery, [title, album, artist, imageURL, uri]);
@@ -200,6 +214,8 @@ module.exports = {
   // songs
   addSong,
   findSong,
+  mostSongsInPlaylist,
+  selectSongsFromDatabase,
   // playlists
   addPlaylist,
   deletePlaylist,
