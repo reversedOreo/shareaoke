@@ -86,7 +86,13 @@ class Playlist extends React.Component {
   }
 
   onSumbit() {
-
+    const { editSongs, playlistId } = this.state
+    const songs = editSongs
+    for (const prop in songs) {
+      axios.delete(`api/playlist/${playlistId}/${songs[prop]}`)
+    }
+    this.setState({editSongs : {}})
+  this.getSongs()
   }
 
   onCancel() {
@@ -136,7 +142,7 @@ class Playlist extends React.Component {
       submit = '';
     } else if (edit) {
       editButton = <button style={{ right: '50%' }} type="button" className="btn btn-danger float-right" onClick={() => { this.editToggle(); this.onCancel(); }}>Cancel</button>;
-      submit = <button style={{ right: '50%' }} type="button" className="btn btn-success float-right" onClick={this.editToggle}>Submit</button>;
+      submit = <button style={{ right: '50%' }} type="button" className="btn btn-success float-right" onClick={() => { this.editToggle(); this.onSumbit(); }}>Submit</button>;
       summary = (
         <div className="input-group">
           <input className="form-control" aria-label="With textarea" value={this.state.description} onChange={this.editSummary} />
