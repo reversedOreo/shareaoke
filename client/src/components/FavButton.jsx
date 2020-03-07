@@ -5,22 +5,19 @@ import axios from 'axios';
 class FavButton extends Component {
   constructor(props) {
     super(props);
-    this.state = { checked: false };
+    this.state = { checked: this.props.isFaved };
     this.handleChange = this.handleChange.bind(this);
     this.handleFavSwitchOn = this.handleFavSwitchOn.bind(this);
     this.handleFavSwitchOff = this.handleFavSwitchOff.bind(this);
   }
 
-  componentDidMount() {
-    // set checked to true if the user favortired already
-  }
-
-  componentDidUpdate() {
-    this.state.checked ? this.handleFavSwitchOn() : this.handleFavSwitchOff();
-  }
-
   handleChange(checked) {
     this.setState({ checked });
+    if (checked) {
+      this.handleFavSwitchOn();
+    } else {
+      this.handleFavSwitchOff();
+    }
   }
 
   handleFavSwitchOn() {
