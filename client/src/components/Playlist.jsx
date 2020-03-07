@@ -29,6 +29,10 @@ class Playlist extends React.Component {
     this.getSongs = this.getSongs.bind(this);
     this.editToggle = this.editToggle.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
+    this.addEditSong = this.addEditSong.bind(this);
+    this.removeEditSong = this.removeEditSong.bind(this);
+    this.editName = this.editName.bind(this);
+    this.editSummary = this.editSummary.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +50,7 @@ class Playlist extends React.Component {
     }
   }
 
+
   getSongs() {
     const { playlistId } = this.state;
 
@@ -53,6 +58,27 @@ class Playlist extends React.Component {
       .then(data => this.setState({
         playlistSongs: data.data,
       }));
+  }
+
+  addEditSong(id) {
+    this.setState({ editSongs: Object.assign({}, this.state.editSongs, { [id]: id }) });
+  }
+
+
+  removeEditSong(id) {
+    console.log('remove');
+    const { editSongs } = this.state;
+    const oldState = editSongs;
+    delete oldState[id];
+    this.setState({ editSongs: oldState });
+  }
+
+  editName(event) {
+    this.setState({ currentPlaylist: event.target.value });
+  }
+
+  editSummary(event) {
+    this.setState({ description: event.target.value });
   }
 
   editToggle() {
@@ -99,12 +125,12 @@ class Playlist extends React.Component {
       submit = <button style={{ right: '50%' }} type="button" className="btn btn-success float-right" onClick={this.editToggle}>Submit</button>;
       summary = (
         <div className="input-group">
-          <input className="form-control" aria-label="With textarea" value={this.state.description} />
+          <input className="form-control" aria-label="With textarea" value={this.state.description} onChange={this.editSummary} />
         </div>
       );
       name = (
         <div className="input-group">
-          <input className="form-control" aria-label="With textarea" value={this.state.currentPlaylist} />
+          <input className="form-control" aria-label="With textarea" value={this.state.currentPlaylist} onChange={this.editName} />
         </div>
       );
     }
@@ -190,7 +216,7 @@ class Playlist extends React.Component {
         </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {playlistSongs.map(song => <Songs handleChange={this.handleCheck} edit={edit} key={song.id} song={song} display={this.displayClickedSong} />)}
+            {playlistSongs.map(song => <Songs handleChange={this.handleCheck} edit={edit} key={song.id} song={song} display={this.displayClickedSong} addSong={this.addEditSong} removeSong={this.removeEditSong} />)}
           </div>
           <div style={{ marginLeft: 200 }}>
             {playerDisplay
