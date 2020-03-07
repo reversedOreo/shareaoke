@@ -3,8 +3,8 @@
  *   mysql -u root < schema.sql
  */
  
-DROP DATABASE IF EXISTS shareaoke;
-CREATE DATABASE shareaoke;
+-- DROP DATABASE IF EXISTS shareaoke;
+-- CREATE DATABASE shareaoke;
 
 USE shareaoke;
 
