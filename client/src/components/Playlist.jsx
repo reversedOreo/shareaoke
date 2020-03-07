@@ -25,7 +25,9 @@ class Playlist extends React.Component {
       isFaved: this.props.location.state.isFaved,
       edit: false,
       editSongs: {},
-      
+      oldName: '',
+      oldSummary: '',
+
     };
     this.displayClickedSong = this.displayClickedSong.bind(this);
     this.getSongs = this.getSongs.bind(this);
@@ -35,15 +37,15 @@ class Playlist extends React.Component {
     this.removeEditSong = this.removeEditSong.bind(this);
     this.editName = this.editName.bind(this);
     this.editSummary = this.editSummary.bind(this);
-    };
-
-  
+  };
 
   componentDidMount() {
     if (this.props.location.state.playlist) {
       this.setState({
         currentPlaylist: this.props.location.state.playlist.name,
+        oldName: this.props.location.state.playlist.name,
         description: this.props.location.state.playlist.description,
+        oldSummary: this.props.location.state.playlist.description,
         playlistId: this.props.location.state.playlist.id,
         userId: this.props.location.state.id_user,
         username: this.props.location.state.username,
@@ -81,6 +83,16 @@ class Playlist extends React.Component {
 
   editSummary(event) {
     this.setState({ description: event.target.value });
+  }
+
+  onSumbit() {
+
+  }
+
+  onCancel() {
+    this.setState({ currentPlaylist: this.state.oldName });
+    this.setState({ description: this.state.oldSummary });
+    this.setState({ editSongs: {} });
   }
 
   editToggle() {
@@ -123,7 +135,7 @@ class Playlist extends React.Component {
       name = currentPlaylist;
       submit = '';
     } else if (edit) {
-      editButton = <button style={{ right: '50%' }} type="button" className="btn btn-danger float-right" onClick={this.editToggle}>Cancel</button>;
+      editButton = <button style={{ right: '50%' }} type="button" className="btn btn-danger float-right" onClick={() => { this.editToggle(); this.onCancel(); }}>Cancel</button>;
       submit = <button style={{ right: '50%' }} type="button" className="btn btn-success float-right" onClick={this.editToggle}>Submit</button>;
       summary = (
         <div className="input-group">
