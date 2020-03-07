@@ -10,9 +10,10 @@ class Friend extends React.Component {
     this.state = {
       showPlaylist: false,
       friendPlaylists: [],
+      isFaved: null,
     };
     this.handleShowPlaylists = this.handleShowPlaylists.bind(this);
-    this.handleFriendPlaylistClick = this.handleFriendPlaylistClick.bind(this);
+    this.checkIfFavorited = this.checkIfFavorited.bind(this);
   }
 
   componentDidMount() {
@@ -38,35 +39,42 @@ class Friend extends React.Component {
     });
   }
 
-  handleFriendPlaylistClick(event) {
-    console.log(event.target.getAttribute('data-playlist'));
-    console.log(event.target.getAttribute('data-friend'));
+  checkIfFavorited(playlist) {
+    // const { playlist } = this.state;
+    const { userId } = this.props;
+    axios.get(`/api/favorite/isfavorited/${userId}/${playlist.id}`)
+      .then((res) => {
+        return res.data;
+      })
+      .catch(err => console.error(err));
   }
 
   render() {
     const { friend, remove, userId } = this.props;
-    const { showPlaylist, friendPlaylists } = this.state;
+    const { showPlaylist, friendPlaylists, isFaved } = this.state;
     return (
       <div>
         <div>{friend.username}</div>
         <Button variant="success" size="sm" onClick={this.handleShowPlaylists}>See Playlists</Button>
         <Button variant="danger" size="sm" onClick={() => remove(friend.id)}>Remove Friend</Button>
-        <div>{showPlaylist && friendPlaylists.map((playlist) => (
-          <div key={playlist.id}>
-            <Link
-              to={{
-                pathname: '/playlist',
-                state: {
-                  id_user: userId,
-                  friend: true,
-                  playlist,
-                },
-              }}
-            >
-            <li data-playlist={playlist.id} data-friend={friend.id} onClick={this.handleFriendPlaylistClick}>{playlist.name}</li>
-            </Link>
-          </div>
-        ))}
+        <div>{showPlaylist && friendPlaylists.map((playlist) => {
+          return (
+            <div key={playlist.id}>
+              <Link
+                to={{
+                  pathname: '/playlist',
+                  state: {
+                    isFaved,
+                    id_user: userId,
+                    friend: true,
+                    playlist,
+                  },
+                }}
+              >
+              <li data-playlist={playlist.id} data-friend={friend.id} onClick={this.handleFriendPlaylistClick}>{playlist.name}</li>
+              </Link>
+            </div>
+          )})}
         </div>
       </div>
     );

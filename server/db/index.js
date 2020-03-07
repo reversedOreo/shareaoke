@@ -38,17 +38,15 @@ const findUser = (username) => {
 // songs
 const mostSongsInPlaylist = () => {
   const mysqlQuery = "SELECT id_song, COUNT(id_song) AS numberSongs FROM playlist_song GROUP BY id_song HAVING COUNT(id_song) > 1";
-  return query(mysqlQuery)
-}
+  return query(mysqlQuery);
+};
 
 const selectSongsFromDatabase = (ids) => {
   // const yo = []
   // yo.push(id)
   const mysqlQuery = 'SELECT * FROM song WHERE id in (?);';
-  return query(mysqlQuery, [ids])
-}
-
-
+  return query(mysqlQuery, [ids]);
+};
 
 const addSong = (title, album, artist, imageURL, uri) => {
   const mysqlQuery = 'INSERT INTO song VALUES(null, ?, ?, ?, ?, ?);';
@@ -206,6 +204,11 @@ const getPlaylist = playlistId => {
   return query(mysqlQuery, [playlistId]);
 };
 
+const checkIfFavorited = (userId, playlistId) => {
+  const mysqlQuery = 'SELECT * FROM favorite WHERE user_id = ? AND playlist_id = ?';
+  return query(mysqlQuery, [userId, playlistId]);
+};
+
 module.exports = {
   // users
   createUser,
@@ -235,4 +238,5 @@ module.exports = {
   postFavorite,
   deleteFavorite,
   getFavorites,
+  checkIfFavorited,
 };

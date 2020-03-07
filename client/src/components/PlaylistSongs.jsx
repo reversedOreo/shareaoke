@@ -10,7 +10,9 @@ class PlaylistSongs extends React.Component {
     super(props);
     this.state = {
       image: '',
+      isFaved: null,
     };
+    this.checkIfFavorited = this.checkIfFavorited.bind(this);
   }
 
   componentDidMount() {
@@ -20,11 +22,23 @@ class PlaylistSongs extends React.Component {
       .then(data => this.setState({
         image: data.data[0].imageURL,
       }));
+    this.checkIfFavorited();
+  }
+
+  checkIfFavorited() {
+    const { id_user, playlist } = this.props;
+    console.log(id_user, playlist.id);
+    axios.get(`/api/favorite/isfavorited/${id_user}/${playlist.id}`)
+      .then((res) => {
+        console.log(res.data);
+        this.setState({ isFaved: res.data });
+      })
+      .catch(err => console.error(err));
   }
 
   render() {
     const { playlist, username, id_user } = this.props;
-    const { image } = this.state;
+    const { image, isFaved } = this.state;
 
     return (
       <Card style={{ width: '15rem', height: '25rem', marginRight: 10, marginLeft: 10, border: 'black' }}>
@@ -38,6 +52,7 @@ class PlaylistSongs extends React.Component {
               to={{
                 pathname: '/playlist',
                 state: {
+                  isFaved,
                   friend: this.props.friend,
                   playlist,
                   username,
