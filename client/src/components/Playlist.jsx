@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { TwitterShareButton, TwitterIcon } from 'react-share';
 import Songs from './Songs.jsx';
 import Lyrics from './Lyrics.jsx';
+import FavButton from './FavButton.jsx';
 
 class Playlist extends React.Component {
   constructor(props) {
@@ -63,8 +64,12 @@ class Playlist extends React.Component {
 
   render() {
     const {
-      currentPlaylist, description, playerDisplay, playlistSongs, uri, clickedSong, userId, username, playlistId
+      currentPlaylist, description, playerDisplay, playlistSongs, uri, clickedSong, userId, username, playlistId,
     } = this.state;
+    let favSwitch = '';
+    if (this.props.location.state.friend) {
+      favSwitch = <FavButton playlistId={playlistId} userId={userId} />;
+    }
 
     return (
       <div>
@@ -127,6 +132,21 @@ class Playlist extends React.Component {
           <h1 style={{ color: 'white' }}>{currentPlaylist}</h1>
           <p style={{ color: 'white' }}>{description}</p>
         </Jumbotron>
+        <div style={{ display: 'flex' }}>
+          <TwitterShareButton
+            style={{ marginRight: 30 }}
+            url="www.twitter.com"
+            title={`Check out my awesome shareaoke playlist!!! http://localhost:8080/#/sharedplaylist/${playlistId}/`}
+            className="Demo__some-network__share-button"
+          >
+            <TwitterIcon
+              size={64}
+              round
+            />
+          </TwitterShareButton>
+          {}
+          {favSwitch}
+        </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {playlistSongs.map(song => <Songs key={song.id} song={song} display={this.displayClickedSong} />)}
@@ -141,16 +161,6 @@ class Playlist extends React.Component {
               : null}
           </div>
         </div>
-        <TwitterShareButton
-          url="www.twitter.com"
-          title={`Check out my awesome shareaoke playlist!!! http://localhost:8080/#/sharedplaylist/${playlistId}/`}
-          className="Demo__some-network__share-button"
-        >
-          <TwitterIcon
-            size={32}
-            round
-          />
-        </TwitterShareButton>
         {playerDisplay ? 
           <Lyrics queryData={clickedSong} />
           : null}

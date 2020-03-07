@@ -123,7 +123,7 @@ class Friend extends React.Component {
       sentFriendRequests,
     } = this.state;
 
-    const { username } = this.props;
+    const { username, id_user } = this.props;
 
     return (
       <div>
@@ -181,6 +181,7 @@ class Friend extends React.Component {
               <Button size="sm" onClick={this.handleClick}>Add Friend</Button>
             </div>
             <FriendsList
+              userId={id_user}
               username={username}
               friends={allFriends}
               received={receivedFriendRequests}

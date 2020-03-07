@@ -25,9 +25,9 @@ favRouter.delete('/', (req, res) => {
     });
 });
 
-favRouter.get('/', (req, res) => {
-  const { userId } = req.body;
-  getFavorites(userId)
+favRouter.get('/:id', (req, res) => {
+  const { id } = req.params;
+  getFavorites(id)
     .then((playlist) => {
       res.send(playlist);
     })
