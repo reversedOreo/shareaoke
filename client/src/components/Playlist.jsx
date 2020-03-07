@@ -22,8 +22,10 @@ class Playlist extends React.Component {
       clickedSong: {},
       userId: 0,
       username: 'guest',
+      isFaved: this.props.location.state.isFaved,
       edit: false,
       editSongs: {},
+      
     };
     this.displayClickedSong = this.displayClickedSong.bind(this);
     this.getSongs = this.getSongs.bind(this);
@@ -33,10 +35,11 @@ class Playlist extends React.Component {
     this.removeEditSong = this.removeEditSong.bind(this);
     this.editName = this.editName.bind(this);
     this.editSummary = this.editSummary.bind(this);
-  }
+    };
+
+  
 
   componentDidMount() {
-    console.log(this.props.match.params.id || 'blank');
     if (this.props.location.state.playlist) {
       this.setState({
         currentPlaylist: this.props.location.state.playlist.name,
@@ -53,11 +56,10 @@ class Playlist extends React.Component {
 
   getSongs() {
     const { playlistId } = this.state;
-
     axios.get(`/api/playlist/songs/${playlistId}`)
-      .then(data => this.setState({
-        playlistSongs: data.data,
-      }));
+      .then((data) => {
+        this.setState({ playlistSongs: data.data });
+      });
   }
 
   addEditSong(id) {
@@ -103,11 +105,11 @@ class Playlist extends React.Component {
 
   render() {
     const {
-      currentPlaylist, description, playerDisplay, playlistSongs, uri, clickedSong, userId, username, playlistId, edit,
+      currentPlaylist, description, playerDisplay, playlistSongs, uri, clickedSong, userId, username, playlistId, isFaved, edit,
     } = this.state;
     let favSwitch = '';
     if (this.props.location.state.friend) {
-      favSwitch = <FavButton playlistId={playlistId} userId={userId} />;
+      favSwitch = <FavButton isFaved={isFaved} playlistId={playlistId} userId={userId} />;
     }
 
     let editButton = '';
