@@ -209,6 +209,11 @@ const checkIfFavorited = (userId, playlistId) => {
   return query(mysqlQuery, [userId, playlistId]);
 };
 
+const updateNameDescription = (name, description, playlistId) => {
+  const mysqlQuery = 'UPDATE playlist SET name = ?, description = ? WHERE id = ?';
+  return query(mysqlQuery, [name, description, playlistId]);
+}
+
 module.exports = {
   // users
   createUser,
@@ -226,6 +231,7 @@ module.exports = {
   showUserPlaylist,
   showPlaylistSongs,
   getPlaylist,
+  updateNameDescription,
   // friends
   sendFriendRequest,
   acceptFriendRequest,

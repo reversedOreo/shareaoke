@@ -7,6 +7,7 @@ const {
   showUserPlaylist,
   showPlaylistSongs,
   getPlaylist,
+  updateNameDescription,
 } = require('../db');
 
 const playlistRouter = Router();
@@ -104,6 +105,21 @@ playlistRouter.get('/getplaylist/:playlistid', (req, res) => {
       res.send(playlist);
     })
     .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+playlistRouter.patch('/:playlistid', (req, res) => {
+  const { playlistid } = req.params;
+  const { name, description } = req.body;
+
+  updateNameDescription(name, description, playlistid)
+    .then(() => {
+      console.log('Name and description updated!')
+      res.status(201).send('Name and description updated!');
+    })
+    .catch((err) =>{
       console.log(err);
       res.sendStatus(500);
     });

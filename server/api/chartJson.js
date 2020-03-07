@@ -1,6 +1,6 @@
 var fs = require('fs');
 const axios = require('axios')
- axios.get("/chart/Music")
+axios.get("/chart/Music")
   .then((artist) => {
     let r = artist.data
     let arr = [],
@@ -11,12 +11,8 @@ const axios = require('axios')
       //var array = arr[key]
       //console.log(arr)
     }
-  }).then((arr) => {fs.writeFile("input.json", JSON.stringify(arr))}).catch((err) => {
-    console.log(err, "fucked up")
-  
-    //console.log(newArr, "help");
-
-  
+  }).then((arr) => { fs.writeFile("input.json", JSON.stringify(arr)) }).catch((err) => {
+    console.log(err, 'fucked up')
   })
 
-  
+

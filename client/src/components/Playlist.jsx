@@ -1,3 +1,4 @@
+/* eslint-disable react/sort-comp */
 /* eslint-disable func-names */
 import React from 'react';
 import axios from 'axios';
@@ -70,7 +71,6 @@ class Playlist extends React.Component {
 
 
   removeEditSong(id) {
-    console.log('remove');
     const { editSongs } = this.state;
     const oldState = editSongs;
     delete oldState[id];
@@ -86,13 +86,20 @@ class Playlist extends React.Component {
   }
 
   onSumbit() {
-    const { editSongs, playlistId } = this.state
-    const songs = editSongs
+    const { 
+      editSongs, playlistId, currentPlaylist, description,
+    } = this.state;
+
+    const songs = editSongs;
     for (const prop in songs) {
       axios.delete(`api/playlist/${playlistId}/${songs[prop]}`)
     }
-    this.setState({editSongs : {}})
-  this.getSongs()
+    this.setState({ editSongs: {} });
+    this.getSongs();
+    axios.patch(`api/playlist/${playlistId}`, { name: currentPlaylist, description });
+
+    this.setState({ oldName: currentPlaylist });
+    this.setState({ oldSummary: description });
   }
 
   onCancel() {
