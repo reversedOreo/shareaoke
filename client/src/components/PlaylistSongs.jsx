@@ -27,10 +27,8 @@ class PlaylistSongs extends React.Component {
 
   checkIfFavorited() {
     const { id_user, playlist } = this.props;
-    console.log(id_user, playlist.id);
     axios.get(`/api/favorite/isfavorited/${id_user}/${playlist.id}`)
       .then((res) => {
-        console.log(res.data);
         this.setState({ isFaved: res.data });
       })
       .catch(err => console.error(err));

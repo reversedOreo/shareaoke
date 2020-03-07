@@ -30,7 +30,6 @@ class Playlist extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.id || 'blank');
     if (this.props.location.state.playlist) {
       this.setState({
         currentPlaylist: this.props.location.state.playlist.name,
