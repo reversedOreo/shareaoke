@@ -31,9 +31,11 @@ class Songs extends React.Component {
     return (
       <div>
         <ListGroup>
-          <ListGroup.Item onClick={this.passUpUriAndPlaySong}>
+          <ListGroup.Item>
             <Image src={song.imageURL} alt="" height="50" width="50" roundedCircle="true" />
-            {`  ${song.title} by ${song.artist}`}
+            <button type="button" class="btn btn-link" onClick={this.passUpUriAndPlaySong}>
+              {`  ${song.title} by ${song.artist}`}
+            </button>
             <div className="form-check float-right">
               {checkbox}
             </div>

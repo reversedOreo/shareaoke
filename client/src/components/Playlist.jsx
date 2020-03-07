@@ -1,3 +1,4 @@
+/* eslint-disable react/sort-comp */
 /* eslint-disable func-names */
 import React from 'react';
 import axios from 'axios';
@@ -25,7 +26,9 @@ class Playlist extends React.Component {
       isFaved: this.props.location.state.isFaved,
       edit: false,
       editSongs: {},
-      
+      oldName: '',
+      oldSummary: '',
+
     };
     this.displayClickedSong = this.displayClickedSong.bind(this);
     this.getSongs = this.getSongs.bind(this);
@@ -35,15 +38,15 @@ class Playlist extends React.Component {
     this.removeEditSong = this.removeEditSong.bind(this);
     this.editName = this.editName.bind(this);
     this.editSummary = this.editSummary.bind(this);
-    };
-
-  
+  };
 
   componentDidMount() {
     if (this.props.location.state.playlist) {
       this.setState({
         currentPlaylist: this.props.location.state.playlist.name,
+        oldName: this.props.location.state.playlist.name,
         description: this.props.location.state.playlist.description,
+        oldSummary: this.props.location.state.playlist.description,
         playlistId: this.props.location.state.playlist.id,
         userId: this.props.location.state.id_user,
         username: this.props.location.state.username,
@@ -68,7 +71,6 @@ class Playlist extends React.Component {
 
 
   removeEditSong(id) {
-    console.log('remove');
     const { editSongs } = this.state;
     const oldState = editSongs;
     delete oldState[id];
@@ -81,6 +83,29 @@ class Playlist extends React.Component {
 
   editSummary(event) {
     this.setState({ description: event.target.value });
+  }
+
+  onSumbit() {
+    const { 
+      editSongs, playlistId, currentPlaylist, description,
+    } = this.state;
+
+    const songs = editSongs;
+    for (const prop in songs) {
+      axios.delete(`api/playlist/${playlistId}/${songs[prop]}`)
+    }
+    this.setState({ editSongs: {} });
+    this.getSongs();
+    axios.patch(`api/playlist/${playlistId}`, { name: currentPlaylist, description });
+
+    this.setState({ oldName: currentPlaylist });
+    this.setState({ oldSummary: description });
+  }
+
+  onCancel() {
+    this.setState({ currentPlaylist: this.state.oldName });
+    this.setState({ description: this.state.oldSummary });
+    this.setState({ editSongs: {} });
   }
 
   editToggle() {
@@ -123,8 +148,8 @@ class Playlist extends React.Component {
       name = currentPlaylist;
       submit = '';
     } else if (edit) {
-      editButton = <button style={{ right: '50%' }} type="button" className="btn btn-danger float-right" onClick={this.editToggle}>Cancel</button>;
-      submit = <button style={{ right: '50%' }} type="button" className="btn btn-success float-right" onClick={this.editToggle}>Submit</button>;
+      editButton = <button style={{ right: '50%' }} type="button" className="btn btn-danger float-right" onClick={() => { this.editToggle(); this.onCancel(); }}>Cancel</button>;
+      submit = <button style={{ right: '50%' }} type="button" className="btn btn-success float-right" onClick={() => { this.editToggle(); this.onSumbit(); }}>Submit</button>;
       summary = (
         <div className="input-group">
           <input className="form-control" aria-label="With textarea" value={this.state.description} onChange={this.editSummary} />
