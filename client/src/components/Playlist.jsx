@@ -22,9 +22,13 @@ class Playlist extends React.Component {
       clickedSong: {},
       userId: 0,
       username: 'guest',
+      edit: false,
+      editSongs: {},
     };
     this.displayClickedSong = this.displayClickedSong.bind(this);
     this.getSongs = this.getSongs.bind(this);
+    this.editToggle = this.editToggle.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
   }
 
   componentDidMount() {
@@ -51,6 +55,15 @@ class Playlist extends React.Component {
       }));
   }
 
+  editToggle() {
+    this.setState(prevState => ({ edit: !prevState.edit }));
+  }
+
+  handleCheck(event) {
+    const { editSongs } = this.state;
+    editSongs[event.target.value] = event.target.value;
+  }
+
   displayClickedSong(song) {
     const { playerDisplay } = this.state;
     const { uri } = song;
@@ -64,13 +77,37 @@ class Playlist extends React.Component {
 
   render() {
     const {
-      currentPlaylist, description, playerDisplay, playlistSongs, uri, clickedSong, userId, username, playlistId,
+      currentPlaylist, description, playerDisplay, playlistSongs, uri, clickedSong, userId, username, playlistId, edit,
     } = this.state;
     let favSwitch = '';
     if (this.props.location.state.friend) {
       favSwitch = <FavButton playlistId={playlistId} userId={userId} />;
     }
 
+    let editButton = '';
+    let submit = '';
+    let name = '';
+    let summary = '';
+
+    if (!edit) {
+      editButton = <button style={{ right: '50%' }} type="button" className="btn btn-success float-right" onClick={this.editToggle}>Edit</button>;
+      summary = description;
+      name = currentPlaylist;
+      submit = '';
+    } else if (edit) {
+      editButton = <button style={{ right: '50%' }} type="button" className="btn btn-danger float-right" onClick={this.editToggle}>Cancel</button>;
+      submit = <button style={{ right: '50%' }} type="button" className="btn btn-success float-right" onClick={this.editToggle}>Submit</button>;
+      summary = (
+        <div className="input-group">
+          <input className="form-control" aria-label="With textarea" value={this.state.description} />
+        </div>
+      );
+      name = (
+        <div className="input-group">
+          <input className="form-control" aria-label="With textarea" value={this.state.currentPlaylist} />
+        </div>
+      );
+    }
     return (
       <div>
         <Breadcrumb>
@@ -88,7 +125,7 @@ class Playlist extends React.Component {
               },
             }}
             >
-                Create playlist
+              Create playlist
             </Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
@@ -100,7 +137,7 @@ class Playlist extends React.Component {
               },
             }}
             >
-                Search
+              Search
             </Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
@@ -112,7 +149,7 @@ class Playlist extends React.Component {
               },
             }}
             >
-                Playlists
+              Playlists
             </Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
@@ -124,13 +161,13 @@ class Playlist extends React.Component {
               },
             }}
             >
-                Friends
+              Friends
             </Link>
           </Breadcrumb.Item>
         </Breadcrumb>
         <Jumbotron style={{ textAlign: 'center', background: 'orange' }}>
-          <h1 style={{ color: 'white' }}>{currentPlaylist}</h1>
-          <p style={{ color: 'white' }}>{description}</p>
+          <h1 style={{ color: 'white' }}>{name}</h1>
+          <p style={{ color: 'white' }}>{summary}</p>
         </Jumbotron>
         <div style={{ display: 'flex' }}>
           <TwitterShareButton
@@ -147,9 +184,13 @@ class Playlist extends React.Component {
           {}
           {favSwitch}
         </div>
+        <div className="editButton clearfix">
+          {editButton}
+          {submit}
+        </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {playlistSongs.map(song => <Songs key={song.id} song={song} display={this.displayClickedSong} />)}
+            {playlistSongs.map(song => <Songs handleChange={this.handleCheck} edit={edit} key={song.id} song={song} display={this.displayClickedSong} />)}
           </div>
           <div style={{ marginLeft: 200 }}>
             {playerDisplay
@@ -161,9 +202,9 @@ class Playlist extends React.Component {
               : null}
           </div>
         </div>
-        {playerDisplay ? 
-          <Lyrics queryData={clickedSong} />
-          : null}
+        {playerDisplay
+          ? (<Lyrics queryData={clickedSong} />
+          ) : null}
       </div>
     );
   }

@@ -19,8 +19,8 @@ const cors = require('cors');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 
-const client_id = 'bc9f1a7cdffb4771ac39ef94c3b89685'; // Your client id
-const client_secret = '334c2b16e64345d98d8710d30e436569'; // Your secret
+const client_id = 'c1c587506ff546f4a6fa1655d56bba73'; // Your client id
+const client_secret = '6cc4b292ead14b4299e39fcc38f7cdfa'; // Your secret
 const redirect_uri = 'http://localhost:8080/spotify/callback'; // Your redirect uri
 
 /**
